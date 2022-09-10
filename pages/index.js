@@ -1,11 +1,25 @@
 import Head from "next/head";
-import Image from "next/image";
+import ArticleList from "../components/ArticleList";
 
-export default function Home() {
+export default function Home({ articles }) {
   return (
     <div>
-      <h1> what is the best way to learn how to code.</h1>
-      <p>computere science is the best way to become an efficient developer.</p>
+      <Head>
+        <title>webdev Newz</title>
+        <meta name="keyword" content="web, development, programming" />
+      </Head>
+      <h1> Welcome to next</h1>
+      <ArticleList articles={articles} />
     </div>
   );
 }
+
+export const getStaticProps = async () => {
+  const res = await fetch(`https:jsonplaceholder.typicode.com/posts?_limit=6`);
+  const articles = await res.json();
+  return {
+    props: {
+      articles,
+    },
+  };
+};
